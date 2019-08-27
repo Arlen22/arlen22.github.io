@@ -1,0 +1,85 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Security Considerations · TiddlyServer</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="- Don&#x27;t run as root (or sudo/su/etc.). Instead use 8080 and put a permanent port redirect in iptables if desired. "/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Security Considerations · TiddlyServer"/><meta property="og:type" content="website"/><meta property="og:url" content="https://arlen22.github.io/tiddlyserver/"/><meta property="og:description" content="- Don&#x27;t run as root (or sudo/su/etc.). Instead use 8080 and put a permanent port redirect in iptables if desired. "/><meta name="twitter:card" content="summary"/><link rel="shortcut icon" href="/tiddlyserver/img/favicon.ico"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/tiddlyserver/js/scrollSpy.js"></script><link rel="stylesheet" href="/tiddlyserver/css/main.css"/><script src="/tiddlyserver/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/tiddlyserver/"><img class="logo" src="/tiddlyserver/img/favicon.ico" alt="TiddlyServer"/><h2 class="headerTitleWithLogo">TiddlyServer</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/tiddlyserver/docs/settingsjson" target="_self">Docs</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Guides</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Guides</h3><ul class=""><li class="navListItem"><a class="navItem" href="/tiddlyserver/docs/gettingstarted">The Getting Started Guide</a></li><li class="navListItem"><a class="navItem" href="/tiddlyserver/docs/history">The History of TiddlyServer</a></li><li class="navListItem"><a class="navItem" href="/tiddlyserver/docs/faq">FAQ</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/tiddlyserver/docs/security">Security Considerations</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Configuration</h3><ul class=""><li class="navListItem"><a class="navItem" href="/tiddlyserver/docs/settingsjson">settings.json</a></li><li class="navListItem"><a class="navItem" href="/tiddlyserver/docs/serverconfig">Server Config</a></li><li class="navListItem"><a class="navItem" href="/tiddlyserver/docs/preflighter">Preflighter</a></li><li class="navListItem"><a class="navItem" href="/tiddlyserver/docs/serverjs">server.js</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 class="postHeaderTitle">Security Considerations</h1></header><article><div><span><ul>
+<li>Don't run as root (or sudo/su/etc.). Instead use 8080 and put a permanent port redirect in iptables if desired.</li>
+<li>Don't run random datafolders that you download from the internet without looking through them first. They have full access to the file system.</li>
+<li>Don't depend on login credentials unless you are using HTTPS. Without encryption, a login will just give you a false sense of security.</li>
+</ul>
+<blockquote>
+<p>This list applies to TiddlyWiki on NodeJS as well.</p>
+</blockquote>
+<h2><a class="anchor" aria-hidden="true" id="the-put-saver"></a><a href="#the-put-saver" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>The PUT saver</h2>
+<p>The put saver can modify any file it wants to, not just HTML files. It is possible to restrict it more securely using HTTPS, but otherwise it is just a wide-open door for grief if you try to use it on the internet. It can be disabled in the access options per-user or per-host or disabled completely in the server config.</p>
+<p>Note that it should be completely impossible to read or write anything inside a data folder because all requests to a data folder path will load the data folder and hand the request off to the TiddlyWiki request handler.</p>
+<h2><a class="anchor" aria-hidden="true" id="multiple-datafolders-being-loaded"></a><a href="#multiple-datafolders-being-loaded" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Multiple datafolders being loaded</h2>
+<p>If you don't trust a data folder, you shouldn't load it in TiddlyServer. The same goes for TiddlyWiki. The data folder mechanism is designed to run user code on the server. Therefore you must trust all your users and data folders or come up with an alternate implementation. There are a few ways this can be done, but none are fully implemented yet. One way to work around it is to load a data folder without the tiddlyweb and filesystem plugins, which will create a read-only data folder.</p>
+<p>Do not run TiddlyServer and TiddlyWiki as root (or using sudo/su/etc.). It's much better to set iptables to permenantly redirect port 80 to 8080 and 443 to 8443 and use them as the default ports rather than using sudo.</p>
+<p>Beware that data folder instances have full access to the file system, and all run under one process, so there is no good way to keep them from finding the settings file unless you use a shell script to chmod it after the server starts and it is owned by a different user than the node process is under.</p>
+<p>Data folders in TiddlyServer are completely separated and should not be able to access each other or any of the TiddlyServer code in the process. While I can't guarentee it, this is what I've tried to accomplish all along. TiddlyWiki also loads all modules in their own v8 context (on the server, but not in the browser). Because this causes a serious performance bottleneck, I've changed this to one context per TiddlyWiki instance. I don't consider this an important change because the browser side is basically setup this way as well. The startup time is reduced considerably by this change.</p>
+<p>Data folders cannot be completely secured, and timing attacks are always a consideration, but under normal circumstances data folder instances cannot access each other or loaded parts of TiddlyServer.</p>
+<h2><a class="anchor" aria-hidden="true" id="the-login-cookie"></a><a href="#the-login-cookie" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>The login cookie</h2>
+<p>The login cookie is generated using a public/private key pair which in turn is generated from the username and password. The main advantage of this is that the password is never sent to the server. Instead the client signs a string and then sends the string and the signature to the server. The server looks up the public key in ServerConfig and checks the signature on the cookie to verify that it originated from the correct private key (i.e the correct username and password).</p>
+<p>For the end-user, they assume they are using a username and password for authentication, so all standard password rules that they have learned apply.</p>
+<p><strong>For you, the reader, I need to warn you</strong> that you must not be lulled into a false sense of security. The private key seed is generated from a hash of the username, password, and a salt that is the same for all TiddlyServer installations by default. It is then put through a PBKDF. It is designed to slow down brute-force attacks, but in the end the security is not better than a simple username+password combination with the password hashed on the server. The code is in <code>/assets/authenticate/authenticate-login.ts</code> if you are interested.</p>
+<p>The only difference is that the password is not sent accross in the clear, but this does not imply that HTTPS is not required, because cookies can always be stolen, and data can always be read in the clear.</p>
+<p>Without HTTPS, there is no security outside of a LAN. I once tried to solve this problem without using HTTPS, and there is basically no way to do it without designing something that ends up looking a lot like SSH port forwarding with public key authentication and known host requirements.</p>
+<h2><a class="anchor" aria-hidden="true" id="the-cookie-suffix"></a><a href="#the-cookie-suffix" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>The cookie suffix</h2>
+<p>The suffix is not a secure feature. An attacker could do several things to take advantage of it. HTTPS should always be used, but I am not requiring it because someone could also want to setup TiddlyServer behind an NGINX reverse proxy or some other HTTPS server.</p>
+<p>The cookie suffix allows all cookies for a user to be invalidated, requiring the user to login in again on all devices. The cookie is normally set statically with a JSON settings file, but if a JavaScript file is used for the settings, the suffix could also be set each time the server starts, which is more secure.</p>
+<p>However, if the suffix is set based on the time, such as hashing the current time, an attacker could brute-force search the approximate time if the exact generation code and the approximate time of server startup is known. An attacker with read-only access to the JavaScript settings file could do this relatively easily unless a random salt is mixed in, in which case there is no point in using the time and the random salt should just be hashed directly.</p>
+<p>An attacker with write access to the settings could re-validate a cookie by setting the suffix for that username and public key to the suffix contained in a stolen cookie. The only advantage of this method is that the public key does not need to be changed, which allows the user to continue using their username/password combination. There is no way to prevent this without keeping track of auth sessions on the server-side and using per-session salts, and it would require an auth store to persist between server restarts.</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/tiddlyserver/docs/faq"><span class="arrow-prev">← </span><span>FAQ</span></a><a class="docs-next button" href="/tiddlyserver/docs/settingsjson"><span>settings.json</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#the-put-saver">The PUT saver</a></li><li><a href="#multiple-datafolders-being-loaded">Multiple datafolders being loaded</a></li><li><a href="#the-login-cookie">The login cookie</a></li><li><a href="#the-cookie-suffix">The cookie suffix</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/tiddlyserver/" class="nav-home"><img src="/tiddlyserver/img/favicon.ico" alt="TiddlyServer" width="66" height="58"/></a><div><h5>Docs</h5><a href="/tiddlyserver/docs/en/doc1.html">Getting Started (or other categories)</a><a href="/tiddlyserver/docs/en/doc2.html">Guides (or other categories)</a><a href="/tiddlyserver/docs/en/doc3.html">API Reference (or other categories)</a></div><div><h5>Community</h5><a href="https://stackoverflow.com/questions/tagged/TiddlyServer" target="_blank" rel="noreferrer noopener">Stack Overflow</a><a href="https://groups.google.com/forum/#!forum/tiddlywiki">TiddlyWiki Google Group</a></div><div><h5>More</h5><a href="/tiddlyserver/blog">Blog</a><a href="https://github.com/Arlen22/TiddlyServer">GitHub</a><a class="github-button" href="https://github.com/Arlen22/TiddlyServer" data-icon="octicon-star" data-count-href="/facebook/docusaurus/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><section class="copyright">Copyright © 2019 Arlen Beiler</section></footer></div></body></html>
