@@ -55,6 +55,21 @@
               }
             });
         </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 class="postHeaderTitle">Server Config</h1></header><article><div><span><p>The server config is both a TypeScript interface, and a JSON file. The JSON file is loaded and normalized to match the ServerConfig interface definition and then type-checked to make sure all the data is valid. This helps me catch bugs during development and helps everyone make sure their settings.json file has the correct format.</p>
+<pre><code class="hljs css language-json">{
+  <span class="hljs-attr">"$schema"</span>: <span class="hljs-string">"../settings-2-1.schema.json"</span>,
+  <span class="hljs-attr">"tree"</span>: {},
+  <span class="hljs-attr">"authAccounts"</span>: {},
+  <span class="hljs-attr">"bindInfo"</span>: {},
+  <span class="hljs-attr">"logging"</span>: {},
+  <span class="hljs-attr">"directoryIndex"</span>: {},
+  <span class="hljs-attr">"datafolder"</span>: {},
+  <span class="hljs-attr">"putsaver"</span>: {},
+  <span class="hljs-attr">"authCookieAge"</span>: <span class="hljs-number">86400</span>,
+  <span class="hljs-attr">"maxTransferRequests"</span>: <span class="hljs-number">20</span>,
+  <span class="hljs-attr">"_devmode"</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">"_datafoldertarget"</span>: <span class="hljs-string">""</span>
+}
+</code></pre>
 <h2><a class="anchor" aria-hidden="true" id="tree"></a><a href="#tree" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>tree</code></h2>
 <p>The tree property has many expressions, but only one format. In it's simplest form, it is expressed as string values specifying folders and files to be served organized into a tree structure using objects.</p>
 <div style="color: rgb(0, 0, 0); font-family: Menlo, Monaco, &quot;Courier New&quot;, monospace; font-size: 12px; line-height: 18px; white-space: pre; overflow: scroll hidden; "><div>{</div><div>  <span style="color: rgb(4, 81, 165);">"tree"</span>: {</div><div>    <span style="color: rgb(4, 81, 165);">"myfolder"</span>: <span style="color: rgb(163, 21, 21);">"../personal"</span>,</div><div>    <span style="color: rgb(4, 81, 165);">"workstuff"</span>: <span style="color: rgb(163, 21, 21);">"../work"</span>,</div><div>    <span style="color: rgb(4, 81, 165);">"user"</span>: <span style="color: rgb(163, 21, 21);">"~/Desktop/random"</span>,</div><div>    <span style="color: rgb(4, 81, 165);">"projects_group"</span>: {</div><div>      <span style="color: rgb(4, 81, 165);">"tiddlyserver"</span>: <span style="color: rgb(163, 21, 21);">"~/Desktop/Github/TiddlyServer"</span>,</div><div>      <span style="color: rgb(4, 81, 165);">"material-theme"</span>: <span style="color: rgb(163, 21, 21);">"~/Dropbox/Material Theme"</span></div><div>    }</div><div>  }</div><div>}</div></div>
