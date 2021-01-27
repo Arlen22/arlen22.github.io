@@ -3,5 +3,5 @@
   "bindInfo": {
     "bindWildcard": true
   },
-  "$schema": "./settings-2-2.schema.json"
+  "$schema": "./tiddlyserver-2-2.schema.json"
 }
