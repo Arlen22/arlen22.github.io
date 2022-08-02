@@ -2,7 +2,13 @@ Simple tools for working with JSON.
 
 Contains two actions: Stringify and Parse. Both actions take the input fields, stringify them, and return them. 
 
-The code below is the entire code block for the API "call". As you can see, no web request is made. 
+This is especially useful for line_items. It also makes it a lot easier to get blocks of information into the Code for Zapier action. 
+
+If you want to return an array, you can use the Code for Zapier action to return an array. Returning an array will cause the subsequent actions to be repeated for each item in the array. 
+
+No external API calls are made. The action simply calls JSON.stringify or JSON.parse in its runtime and returns immediately. 
+
+The code below is the entire code block for the API "call".
 
 ### Stringify
 Each key in the dictionary is returned as a field with the value stringified.  This is the code that runs.
@@ -49,8 +55,4 @@ return Promise.resolve({
 });
 ```
 
-This is especially useful for line_items. It also makes it a lot easier to get blocks of information into the Code for Zapier action. 
 
-If you want to return an array, you can use the Code for Zapier action to return an array. Returning an array will cause the subsequent actions to be repeated for each item in the array. 
-
-No external API calls are made. The action simply calls JSON.stringify or JSON.parse in its runtime and returns immediately. 
