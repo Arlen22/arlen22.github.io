@@ -11,7 +11,7 @@ No external API calls are made. The action simply calls JSON.stringify or JSON.p
 The code below is the entire code block for the API "call".
 
 ### Stringify
-Each key in the dictionary is returned as a field with the value stringified.  This is the code that runs.
+The entire dictionary or line items array is stringified as-is.  This is the code that runs.
 
 ```js
 let line_items = bundle.inputData.line_items 
