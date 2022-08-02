@@ -13,8 +13,7 @@ let line_items = bundle.inputData.line_items
   : undefined;
 return Promise.resolve({
   dictionary: z.JSON.stringify(bundle.inputData.dictionary || {}),
-  line_items: z.JSON.stringify(line_items || []),
-  inputData: z.JSON.stringify(bundle.inputData)
+  line_items: z.JSON.stringify(line_items || [])
 });
 ```
 
