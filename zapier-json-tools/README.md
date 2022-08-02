@@ -19,14 +19,14 @@ return Promise.resolve({
 ```
 
 ### Parse
-Each key in the dictionary is returned as a field with the value parsed. If a value does not parse, it is set to undefined, which is not a valid JSON value.
+Each key in the dictionary is returned as a field with the value parsed. If a value does not parse, it is set to null, which is also a valid JSON value.
 
 This is the code that runs.
 
 ```js
 const copy = (d,r) => { 
   Object.keys(d).forEach(e => {
-    try {r[e] = JSON.parse(d[e])} catch (x) {r[e] = undefined} 
+    try {r[e] = JSON.parse(d[e])} catch (x) {r[e] = null} 
   });
 };
 console.log(bundle.inputData);
