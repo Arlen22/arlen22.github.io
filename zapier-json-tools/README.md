@@ -29,12 +29,14 @@ const copy = (d,r) => {
     try {r[e] = JSON.parse(d[e])} catch (x) {r[e] = null} 
   });
 };
-console.log(bundle.inputData);
+
 const output = { 
   dictionary: {}, 
   line_items: []
 };
-copy(bundle.inputData.dict, output.dictionary);
+if(bundle.inputData.dict){
+  copy(bundle.inputData.dict, output.dictionary);
+}
 if(Array.isArray(bundle.inputData.line_items)){
   bundle.inputData.line_items.forEach(e => {
     let obj = {}
@@ -43,8 +45,6 @@ if(Array.isArray(bundle.inputData.line_items)){
   })
 }
 return Promise.resolve({
-  inputData: JSON.stringify(bundle.inputData), 
-  outputData: JSON.stringify(output),
   dictionary: output.dictionary, 
   line_items: output.line_items
 });
